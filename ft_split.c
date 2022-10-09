@@ -5,98 +5,109 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: caboudar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/02 14:58:59 by caboudar          #+#    #+#             */
-/*   Updated: 2022/05/14 21:20:37 by caboudar         ###   ########.fr       */
+/*   Created: 2022/10/05 13:01:46 by caboudar          #+#    #+#             */
+/*   Updated: 2022/10/09 21:41:10 by caboudar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/pipex.h"
 
-int	ft_char_is_sep(char c, char charset)
+void    free_tab(char **arr, int i)
 {
-	return (c == charset);
+	while (i)
+	{
+		free(arr[i]);
+		i--;
+	}
+    free(arr);
 }
 
 int	ft_word_len(char *str, char charset)
 {
-	int		i;
+	int		len;
 
-	i = 0;
-	while (str[i] && !ft_char_is_sep(str[i], charset))
-		i++;
-	return (i);
+	len = 0;
+	while (str[len] && str[len] != charset)
+		len++;
+	return (len);
 }
 
 int	ft_word_count(char *str, char charset)
 {
 	int		count;
-	int		word_len;
+    int		i;
 
 	count = 0;
-	while (*str)
+    i = 0;
+	while (str[i])
 	{
-		if (*str && ft_char_is_sep(*str, charset))
-			str++;
+		if (str[i] && str[i] == charset)
+			i++;
 		else
 		{
 			count++;
-			word_len = ft_word_len(str, charset);
-			str += word_len;
+			while (str[i] && str[i] != charset)
+			i++;
 		}
 	}
 	return (count);
 }
 
-char	*ft_malloc_word(char *str, int u)
+char	*ft_malloc_word(char *str, char charset)
 {
 	char	*word;
+	int		size;
 
-	word = malloc(sizeof(char) * (u + 1));
+	size = ft_word_len(str, charset);
+	word = malloc(sizeof(char) * (size + 1));
 	if (!word)
 		return (NULL);
-	word[u] = '\0';
-	while (--u >= 0)
-		word[u] = str[u];
+	word[size] = '\0';
+	while (--size >= 0)
+		word[size] = str[size];
 	return (word);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(char *str, char c)
 {
-	char	*str;
 	char	**arr;
 	int		word_count;
-	int		word_len;
 	int		i;
+	int		j;
 
-	str = (char *)s;
 	word_count = ft_word_count(str, c);
 	arr = malloc(sizeof(char *) * (word_count + 1));
 	if (!arr)
 		return (NULL);
 	i = -1;
+	j = 0;
 	while (++i < word_count)
 	{
-		while (*str && ft_char_is_sep(*str, c))
-			str++;
-		word_len = ft_word_len(str, c);
-		arr[i] = ft_malloc_word(str, word_len);
+		while (str[j] && str[j] == c)
+			j++;
+		arr[i] = ft_malloc_word(str + j, c);
 		if (!arr[i])
+		{
+			free_tab(arr, i);
 			return (NULL);
-		str += word_len;
+		}
+		j += ft_word_len(str + j, c);
 	}
 	arr[i] = NULL;
 	return (arr);
 }
 
-// #include <stdio.h>
-// int main(int ac, char **av)
-// {
-// 	int i = -1;
-// 	char **arr = ft_split(av[1], *av[2]);
+/*
+#include <stdio.h>
+int main(int ac, char **av)
+{
+	int i = -1;
+	char **arr = ft_split(av[1], *av[2]);
 
-// 	if (ac == 3)
-// 	{
-// 		while (arr[++i])
-// 			printf("%s\n", arr[i]);
-// 	}
-// }
+	if (ac == 3)
+	{
+		while (arr[++i])
+			printf("%s\n", arr[i]);
+	}
+}
+*/
