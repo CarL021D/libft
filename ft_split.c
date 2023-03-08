@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caboudar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: caboudar <caboudar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:01:46 by caboudar          #+#    #+#             */
-/*   Updated: 2022/10/09 21:41:10 by caboudar         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:48:38 by caboudar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    free_tab(char **arr, int i)
 {
 	while (i)
 	{
-		free(arr[i]);
+		free(arr[i - 1]);
 		i--;
 	}
     free(arr);
