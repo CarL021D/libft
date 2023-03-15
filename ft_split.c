@@ -6,20 +6,23 @@
 /*   By: caboudar <caboudar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:01:46 by caboudar          #+#    #+#             */
-/*   Updated: 2023/03/08 11:48:38 by caboudar         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:56:27 by caboudar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void    free_tab(char **arr, int i)
+void    free_arr(char **arr, int i)
 {
-	while (i)
+	if (i)
 	{
-		free(arr[i - 1]);
-		i--;
+		while (i >= 0)
+		{
+			free(arr[i]);
+			i--;
+		}
 	}
-    free(arr);
+	free(arr);
 }
 
 int	ft_word_len(char *str, char charset)
