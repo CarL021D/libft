@@ -6,7 +6,7 @@
 /*   By: caboudar <caboudar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:01:46 by caboudar          #+#    #+#             */
-/*   Updated: 2023/03/15 13:56:27 by caboudar         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:02:25 by caboudar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    free_arr(char **arr, int i)
 {
 	if (i)
 	{
-		while (i >= 0)
+		while (i > 0)
 		{
 			free(arr[i - 1]);
 			i--;
